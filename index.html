@@ -6,56 +6,47 @@
 <title>The VA From Isoko</title>
 <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-<section class="profile-collage">
+<section class="profile-collage" aria-label="Portfolio Introduction">
+    <div class="grid">
+        <!-- Brand Block: PA Logo + Golden Line -->
+        <div class="card card--brand">
+            <img src="paicon.png" alt="PA Monogram Logo" loading="eager">
+            <!-- Note: If the golden line is IN the image, remove the span below. 
+                 If it's CSS decoration, keep it. Based on your description, 
+                 assuming the image contains both PA and line, so we center it. -->
+        </div>
 
-<div class="grid">
+        <!-- Suit: Corporate authority shot -->
+        <div class="card card--suit">
+            <img src="suit.png" alt="Professional in business suit" loading="lazy">
+        </div>
 
-    <!-- Brand Block -->
-    <div class="card">
-        <img src="paicon.png" alt="iconmark">
-        <span class="line"></span>
+        <!-- Black/White: Full frame artistic shot -->
+        <div class="card card--bw">
+            <img src="blackwhite.png" alt="Black and white portrait" loading="lazy">
+        </div>
+
+        <!-- Jacket: Casual professional -->
+        <div class="card card--jacket">
+            <img src="jacket.png" alt="Professional in jacket" loading="lazy">
+        </div>
     </div>
 
-    <!-- Top Right -->
-    <div class="card">
-        <img src="suit.png" alt="suited">
-    </div>
+    <!-- Center Floating: The Hero Shot -->
+    <a href="#about" class="center-card" aria-label="Learn more about The VA From Isoko">
+        <img src="lounge.png" alt="Relaxed professional portrait" loading="eager">
+    </a>
 
-    <!-- Bottom Left -->
-    <div class="card">
-        <img src="blackwhite.png" alt="bw">
-    </div>
-
-    <!-- Bottom Right -->
-    <div class="card">
-        <img src="jacket.png" alt="jackie">
-    </div>
-
-</div>
-
-<!-- Center Floating Image -->
-   <a href="#about" class="center-card">
-<img src="lounge.png" alt="lounging">
-</a>
-
-<p class="website">THE VA FROM ISOKO</p>
-
+    <p class="website">THE VA FROM ISOKO</p>
 </section>
 
-<section class="intro">
-
-<h1>The VA From Isoko</h1>
-
-<p>
-Digital Builder • Systems Thinker • Social Media Strategist
-</p>
-
-<a href="#about" class="cta">Enter Site</a>
-
+<section class="intro" id="about">
+    <h1>The VA From Isoko</h1>
+    <p>Digital Builder • Systems Thinker • Social Media Strategist</p>
+    <a href="#contact" class="cta">Enter Site</a>
 </section>
-    
+
 </body>
 </html>
