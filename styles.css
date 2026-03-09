@@ -12,6 +12,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 html {
@@ -20,50 +21,41 @@ html {
 
 body {
   background: var(--bg);
-  padding: clamp(40px, 8vh, 80px) 20px;
+  padding: 80px 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  /* System font stack for better mobile rendering */
+  overflow-x: hidden; /* Prevents tiny horizontal wobbles on mobile */
 }
 
-/* ============================================
-   MAIN CONTAINER: Fixed width disaster patched
-   ============================================ */
+/* --- MAIN SECTION --- */
 .profile-collage {
   width: 100%;
-  max-width: 900px; /* Was fixed 900px - now fluid with cap */
+  max-width: 900px;
   position: relative;
   text-align: center;
-  margin-bottom: clamp(60px, 10vh, 100px);
-  padding: 0 10px; /* Prevents edge touching on mobile */
+  margin-bottom: 100px;
+  z-index: 1; /* Ensures stacking context for the center card */
 }
 
-/* ============================================
-   GRID: Responsive by default
-   ============================================ */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(12px, 2vw, 22px); /* Fluid gap */
+  gap: 22px;
 }
 
-/* ============================================
-   BASE CARD: Aspect ratio replaces fixed height
-   ============================================ */
+/* --- CARD STYLE --- */
 .card {
   background: white;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-soft);
-  aspect-ratio: 1 / 1; /* Square cards - better than fixed 300px */
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  position: relative;
+  transition: transform .4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow .4s ease;
 }
 
 .card:hover {
@@ -71,137 +63,105 @@ body {
   box-shadow: var(--shadow-hover);
 }
 
+/* --- INDIVIDUAL IMAGE CONTROLS --- */
 .card img {
   width: 100%;
   height: 100%;
-  display: block; /* Removes phantom spacing */
+  transition: transform .5s ease;
 }
 
-/* ============================================
-   CONTENT-SPECIFIC IMAGE HANDLING
-   ============================================ */
-
-/* BRAND (paicon): Center on the PA mark and golden line */
-.card--brand {
-  background: var(--navy); /* Fallback if image has transparency */
+/* 1. Brand Block (Top Left) */
+.grid .card:nth-child(1) {
+  background: var(--navy);
+  flex-direction: column;
+}
+.grid .card:nth-child(1) img {
+  object-fit: contain; /* Keeps the PA logo from being cut off */
+  padding: 20%;        /* Gives the logo room to breathe */
 }
 
-.card--brand img {
+/* 2. Suit (Top Right) */
+.grid .card:nth-child(2) img {
   object-fit: cover;
-  object-position: center center; /* Dead center for logo + line */
-  padding: 20%; /* Creates breathing room around logo if it's too large */
-  /* If your PA icon is a small logo, this padding prevents it from 
-     filling the entire card and looking pixelated */
+  object-position: center 20%; /* Keeps head in frame */
 }
 
-/* SUIT: Current view acceptable - focus on upper body */
-.card--suit img {
+/* 3. Black & White (Bottom Left) */
+.grid .card:nth-child(3) img {
   object-fit: cover;
-  object-position: center top; /* Keeps head/shoulders in frame */
+  object-position: 22% center; /* Focuses on the person on the left side of the shot */
 }
 
-/* BLACK/WHITE: Show ENTIRE image - no cropping */
-.card--bw {
-  background: #1a1a1a; /* Dark background for letterboxing */
-}
-
-.card--bw img {
-  object-fit: contain; /* CRITICAL: Shows full image */
+/* 4. Jacket (Bottom Right) */
+.grid .card:nth-child(4) img {
+  object-fit: cover;
   object-position: center;
-  padding: 10px; /* Prevents edge touching */
 }
 
-/* JACKET: Current view acceptable */
-.card--jacket img {
-  object-fit: cover;
-  object-position: center top;
-}
-
-/* ============================================
-   CENTER CARD: The Floating Hero
-   ============================================ */
+/* --- CENTER FLOATING CARD --- */
 .center-card {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(200px, 35vw, 320px); /* Fluid sizing */
-  aspect-ratio: 1 / 1;
+  width: 320px;
+  height: 320px;
   border-radius: var(--radius);
   overflow: hidden;
-  border: clamp(8px, 1.5vw, 12px) solid var(--bg);
-  box-shadow: 0 10px 35px rgba(0,0,0,0.2);
-  z-index: 10; /* Explicit stacking context */
-  transition: transform 0.5s ease;
-  display: block; /* Removes anchor line-height issues */
-}
-
-.center-card:hover {
-  transform: translate(-50%, -55%) scale(1.04);
+  border: 12px solid var(--bg);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+  z-index: 10; /* CRITICAL: Ensures it sits above all grid cards on all browsers */
+  transition: transform .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .center-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Changed from contain - hero shots need to fill */
-  object-position: center 20%; /* Focuses on face/subject, not belly/waist */
+  object-fit: cover;
+  object-position: center;
 }
 
-/* ============================================
-   TYPOGRAPHY & UTILITIES
-   ============================================ */
+.center-card:hover {
+  transform: translate(-50%, -54%) scale(1.04);
+}
+
+/* --- TEXT & INTRO --- */
 .website {
   margin-top: 28px;
-  font-size: clamp(12px, 2vw, 14px);
+  font-size: 14px;
   color: var(--text);
   letter-spacing: 3px;
-  font-weight: 600;
+  text-transform: uppercase;
 }
 
-/* ============================================
-   INTRO SECTION
-   ============================================ */
 .intro {
   margin-top: 40px;
   text-align: center;
   max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
   opacity: 0;
   animation: fadeUp 1.2s ease forwards;
-  animation-delay: 0.4s;
-  padding: 0 20px;
+  animation-delay: .4s;
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .intro h1 {
-  font-size: clamp(28px, 5vw, 40px);
+  font-size: 40px;
   color: var(--navy);
   margin-bottom: 15px;
-  letter-spacing: 1px;
-  line-height: 1.2;
 }
 
 .intro p {
-  font-size: clamp(16px, 3vw, 18px);
+  font-size: 18px;
   color: #555;
   margin-bottom: 30px;
   line-height: 1.6;
 }
 
-/* ============================================
-   CTA: Touch-optimized
-   ============================================ */
+/* CTA BUTTON */
 .cta {
   display: inline-block;
   padding: 14px 32px;
@@ -211,82 +171,36 @@ body {
   border-radius: 40px;
   font-size: 16px;
   font-weight: 600;
-  transition: all 0.3s ease;
-  min-height: 44px; /* WCAG touch target minimum */
-  min-width: 44px;
+  transition: all .3s ease;
 }
 
-.cta:hover, .cta:focus {
+.cta:hover {
   background: #0d2d56;
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
 }
 
-/* ============================================
-   MOBILE OPTIMIZATIONS (<= 768px)
-   ============================================ */
+/* --- RESPONSIVE MOBILE FIXES --- */
 @media (max-width: 768px) {
-  body {
-    padding: 40px 16px;
-  }
-  
-  .grid {
-    gap: 12px;
-  }
-  
-  /* Center card adjustments for mobile */
-  .center-card {
-    border-width: 6px;
-    /* Slightly smaller to ensure grid visibility around it */
-    width: clamp(160px, 45vw, 230px);
-  }
-  
-  /* Ensure text doesn't wrap awkwardly on small screens */
-  .website {
-    letter-spacing: 2px;
-    margin-top: 20px;
-  }
-}
+  body { padding: 40px 15px; }
 
-/* Extra small devices */
-@media (max-width: 380px) {
-  .grid {
-    gap: 8px;
-  }
-  
-  .card {
-    border-radius: 20px; /* Slightly smaller radius on tiny screens */
-  }
-  
-  .center-card {
-    border-radius: 20px;
-  }
-}
+  .profile-collage { margin-bottom: 60px; }
 
-/* ============================================
-   ACCESSIBILITY: Respect user preferences
-   ============================================ */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  
-  html {
-    scroll-behavior: auto;
-  }
-}
+  .grid { gap: 15px; }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .card {
-    border: 2px solid black;
-  }
-  
+  .card { height: 240px; border-radius: 20px; }
+
   .center-card {
-    border-color: black;
+    width: 200px;
+    height: 200px;
+    border: 8px solid var(--bg);
+    border-radius: 18px;
+  }
+
+  .intro h1 { font-size: 32px; }
+  
+  /* Extra nudge for the B&W image on small screens */
+  .grid .card:nth-child(3) img {
+    object-position: 18% center;
   }
 }
