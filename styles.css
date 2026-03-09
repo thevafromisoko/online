@@ -1,195 +1,292 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
+:root {
+  --navy: #071b34;
+  --gold: #d8b26e;
+  --bg: #eeeeee;
+  --text: #444;
+  --radius: 30px;
+  --shadow-soft: 0 8px 25px rgba(0,0,0,0.08);
+  --shadow-hover: 0 18px 40px rgba(0,0,0,0.15);
 }
 
-body{
-background:#eeeeee;
-padding:80px 20px;
-min-height:100vh;
-display:flex;
-flex-direction:column;
-align-items:center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* MAIN SECTION */
-
-.profile-collage{
-width:900px;
-position:relative;
-text-align:center;
-margin-bottom:100px;
+html {
+  scroll-behavior: smooth;
 }
 
-/* GRID */
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:22px;
+body {
+  background: var(--bg);
+  padding: clamp(40px, 8vh, 80px) 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* System font stack for better mobile rendering */
 }
 
-/* CARD STYLE */
-
-.card{
-background:white;
-border-radius:30px;
-overflow:hidden;
-box-shadow:0 8px 25px rgba(0,0,0,0.08);
-height:300px;
-display:flex;
-justify-content:center;
-align-items:center;
-transition:transform .4s ease, box-shadow .4s ease;
+/* ============================================
+   MAIN CONTAINER: Fixed width disaster patched
+   ============================================ */
+.profile-collage {
+  width: 100%;
+  max-width: 900px; /* Was fixed 900px - now fluid with cap */
+  position: relative;
+  text-align: center;
+  margin-bottom: clamp(60px, 10vh, 100px);
+  padding: 0 10px; /* Prevents edge touching on mobile */
 }
 
-.card:hover{
-transform:translateY(-8px);
-box-shadow:0 18px 40px rgba(0,0,0,0.15);
+/* ============================================
+   GRID: Responsive by default
+   ============================================ */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 2vw, 22px); /* Fluid gap */
 }
 
-.center-card{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-width:320px;
-height:320px;
-border-radius:30px;
-overflow:hidden;
-border:12px solid #eeeeee;
-box-shadow:0 10px 35px rgba(0,0,0,0.15);
-transition:transform .5s ease;
+/* ============================================
+   BASE CARD: Aspect ratio replaces fixed height
+   ============================================ */
+.card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  aspect-ratio: 1 / 1; /* Square cards - better than fixed 300px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
 }
 
-.center-card:hover{
-transform:translate(-50%,-55%) scale(1.04);
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
 }
 
-.card img{
-width:100%;
-height:100%;
-object-fit:cover;
-object-position:center top;
+.card img {
+  width: 100%;
+  height: 100%;
+  display: block; /* Removes phantom spacing */
 }
 
-.center-card img{
-width:100%;
-height:100%;
-object-fit:contain;
+/* ============================================
+   CONTENT-SPECIFIC IMAGE HANDLING
+   ============================================ */
+
+/* BRAND (paicon): Center on the PA mark and golden line */
+.card--brand {
+  background: var(--navy); /* Fallback if image has transparency */
 }
 
-/* BRAND BLOCK */
-
-.brand{
-background:#071b34;
-color:white;
-flex-direction:column;
+.card--brand img {
+  object-fit: cover;
+  object-position: center center; /* Dead center for logo + line */
+  padding: 20%; /* Creates breathing room around logo if it's too large */
+  /* If your PA icon is a small logo, this padding prevents it from 
+     filling the entire card and looking pixelated */
 }
 
-.brand h1{
-font-size:120px;
-font-weight:700;
-letter-spacing:5px;
+/* SUIT: Current view acceptable - focus on upper body */
+.card--suit img {
+  object-fit: cover;
+  object-position: center top; /* Keeps head/shoulders in frame */
 }
 
-.brand .line{
-width:60px;
-height:4px;
-background:#d8b26e;
-margin-top:10px;
+/* BLACK/WHITE: Show ENTIRE image - no cropping */
+.card--bw {
+  background: #1a1a1a; /* Dark background for letterboxing */
 }
 
-/* WEBSITE */
-
-.website{
-margin-top:28px;
-font-size:14px;
-color:#444;
-letter-spacing:3px;
+.card--bw img {
+  object-fit: contain; /* CRITICAL: Shows full image */
+  object-position: center;
+  padding: 10px; /* Prevents edge touching */
 }
 
-/* INTRO SECTION */
-
-.intro{
-margin-top:40px;
-text-align:center;
-max-width:700px;
-margin-left:auto;
-margin-right:auto;
-opacity:0;
-animation:fadeUp 1.2s ease forwards;
-animation-delay:.4s;
+/* JACKET: Current view acceptable */
+.card--jacket img {
+  object-fit: cover;
+  object-position: center top;
 }
 
-@keyframes fadeUp{
-
-from{
-opacity:0;
-transform:translateY(30px);
+/* ============================================
+   CENTER CARD: The Floating Hero
+   ============================================ */
+.center-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(200px, 35vw, 320px); /* Fluid sizing */
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: clamp(8px, 1.5vw, 12px) solid var(--bg);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+  z-index: 10; /* Explicit stacking context */
+  transition: transform 0.5s ease;
+  display: block; /* Removes anchor line-height issues */
 }
 
-to{
-opacity:1;
-transform:translateY(0);
+.center-card:hover {
+  transform: translate(-50%, -55%) scale(1.04);
 }
 
+.center-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Changed from contain - hero shots need to fill */
+  object-position: center 20%; /* Focuses on face/subject, not belly/waist */
 }
 
-.intro h1{
-font-size:40px;
-color:#071b34;
-margin-bottom:15px;
-letter-spacing:1px;
+/* ============================================
+   TYPOGRAPHY & UTILITIES
+   ============================================ */
+.website {
+  margin-top: 28px;
+  font-size: clamp(12px, 2vw, 14px);
+  color: var(--text);
+  letter-spacing: 3px;
+  font-weight: 600;
 }
 
-.intro p{
-font-size:18px;
-color:#555;
-margin-bottom:30px;
-line-height:1.6;
+/* ============================================
+   INTRO SECTION
+   ============================================ */
+.intro {
+  margin-top: 40px;
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  animation: fadeUp 1.2s ease forwards;
+  animation-delay: 0.4s;
+  padding: 0 20px;
 }
 
-/* CTA BUTTON */
-
-.cta{
-display:inline-block;
-padding:14px 32px;
-background:#071b34;
-color:white;
-text-decoration:none;
-border-radius:40px;
-font-size:16px;
-font-weight:600;
-transition:all .3s ease;
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.cta:hover{
-background:#0d2d56;
-transform:translateY(-3px);
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
+.intro h1 {
+  font-size: clamp(28px, 5vw, 40px);
+  color: var(--navy);
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  line-height: 1.2;
 }
 
-@media (max-width:768px){
-
-.profile-collage{
-width:100%;
+.intro p {
+  font-size: clamp(16px, 3vw, 18px);
+  color: #555;
+  margin-bottom: 30px;
+  line-height: 1.6;
 }
 
-.grid{
-gap:18px;
+/* ============================================
+   CTA: Touch-optimized
+   ============================================ */
+.cta {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--navy);
+  color: white;
+  text-decoration: none;
+  border-radius: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-height: 44px; /* WCAG touch target minimum */
+  min-width: 44px;
 }
 
-.card{
-height:260px;
+.cta:hover, .cta:focus {
+  background: #0d2d56;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 
-.center-card{
-width:230px;
-height:230px;
-border:8px solid #eeeeee;
+/* ============================================
+   MOBILE OPTIMIZATIONS (<= 768px)
+   ============================================ */
+@media (max-width: 768px) {
+  body {
+    padding: 40px 16px;
+  }
+  
+  .grid {
+    gap: 12px;
+  }
+  
+  /* Center card adjustments for mobile */
+  .center-card {
+    border-width: 6px;
+    /* Slightly smaller to ensure grid visibility around it */
+    width: clamp(160px, 45vw, 230px);
+  }
+  
+  /* Ensure text doesn't wrap awkwardly on small screens */
+  .website {
+    letter-spacing: 2px;
+    margin-top: 20px;
+  }
 }
 
+/* Extra small devices */
+@media (max-width: 380px) {
+  .grid {
+    gap: 8px;
+  }
+  
+  .card {
+    border-radius: 20px; /* Slightly smaller radius on tiny screens */
+  }
+  
+  .center-card {
+    border-radius: 20px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY: Respect user preferences
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card {
+    border: 2px solid black;
+  }
+  
+  .center-card {
+    border-color: black;
+  }
 }
