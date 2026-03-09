@@ -71,29 +71,27 @@ body {
 }
 
 /* 1. Brand Block (Top Left) */
-.grid .card:nth-child(1) {
+.card--brand {
   background: var(--navy);
   flex-direction: column;
 }
-.grid .card:nth-child(1) img {
-  object-fit: contain; /* Keeps the PA logo from being cut off */
-  padding: 20%;        /* Gives the logo room to breathe */
+
+.card--brand img {
+  object-fit: contain;
+  padding: 20%;
 }
 
-/* 2. Suit (Top Right) */
-.grid .card:nth-child(2) img {
+.card--suit img {
   object-fit: cover;
-  object-position: center 20%; /* Keeps head in frame */
+  object-position: center 20%;
 }
 
-/* 3. Black & White (Bottom Left) */
-.grid .card:nth-child(3) img {
+.card--bw img {
   object-fit: cover;
-  object-position: 22% center; /* Focuses on the person on the left side of the shot */
+  object-position: 22% center;
 }
 
-/* 4. Jacket (Bottom Right) */
-.grid .card:nth-child(4) img {
+.card--jacket img {
   object-fit: cover;
   object-position: center;
 }
@@ -172,42 +170,24 @@ body {
   font-size: 16px;
   font-weight: 600;
   transition: all .3s ease;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
+.cta:focus-visible,
+.concierge-primary:focus-visible,
+.concierge-secondary:focus-visible,
+.concierge-close:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
 .cta:hover {
   background: #0d2d56;
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-/* --- RESPONSIVE MOBILE FIXES --- */
-@media (max-width: 768px) {
-  body { padding: 40px 15px; }
-
-  .profile-collage { margin-bottom: 60px; }
-
-  .grid { gap: 15px; }
-
-  .card { height: 240px; border-radius: 20px; }
-
-  .center-card {
-    width: 200px;
-    height: 200px;
-    border: 8px solid var(--bg);
-    border-radius: 18px;
-  }
-
-  .intro h1 { font-size: 32px; }
-  
-  /* Extra nudge for the B&W image on small screens */
-  .grid .card:nth-child(3) img {
-    object-position: 18% center;
-  }
-}
-
-.cta {
-  border: none;
-  cursor: pointer;
 }
 
 /* Luxury concierge modal */
@@ -323,7 +303,29 @@ body {
   color: #fff;
 }
 
+/* --- RESPONSIVE MOBILE FIXES --- */
 @media (max-width: 768px) {
+  body { padding: 40px 15px; }
+
+  .profile-collage { margin-bottom: 60px; }
+
+  .grid { gap: 15px; }
+
+  .card { height: 240px; border-radius: 20px; }
+
+  .center-card {
+    width: 200px;
+    height: 200px;
+    border: 8px solid var(--bg);
+    border-radius: 18px;
+  }
+
+  .intro h1 { font-size: 32px; }
+  
+  .card--bw img {
+    object-position: 18% center;
+  }
+
   .concierge-panel {
     padding: 28px 20px 22px;
     border-radius: 22px;
