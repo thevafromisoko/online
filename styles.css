@@ -204,3 +204,136 @@ body {
     object-position: 18% center;
   }
 }
+
+.cta {
+  border: none;
+  cursor: pointer;
+}
+
+/* Luxury concierge modal */
+.concierge-modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(7, 27, 52, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+
+.concierge-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.concierge-panel {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  padding: 34px 28px 28px;
+  border-radius: 28px;
+  background: linear-gradient(145deg, #071b34 0%, #0d2d56 100%);
+  color: #ffffff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(216, 178, 110, 0.35);
+  text-align: center;
+}
+
+.concierge-eyebrow {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.concierge-panel h2 {
+  font-size: 30px;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  color: #fff;
+}
+
+.concierge-text {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.86);
+  margin-bottom: 24px;
+}
+
+.concierge-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.concierge-primary,
+.concierge-secondary {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 14px 22px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.concierge-primary {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.concierge-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.concierge-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.concierge-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.concierge-note {
+  margin-top: 18px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.concierge-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.concierge-close:hover {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .concierge-panel {
+    padding: 28px 20px 22px;
+    border-radius: 22px;
+  }
+
+  .concierge-panel h2 {
+    font-size: 24px;
+  }
+
+  .concierge-text {
+    font-size: 15px;
+  }
+}
