@@ -45,8 +45,74 @@
 <section class="intro" id="about">
     <h1>The VA From Isoko</h1>
     <p>Digital Builder • Systems Thinker • Social Media Strategist</p>
+    <button class="cta" id="openConcierge" type="button">Enter Site</button>
     <a href="about.html" class="cta">Enter Site</a>
 </section>
+
+<div class="concierge-modal" id="conciergeModal" aria-hidden="true">
+  <div class="concierge-panel" role="dialog" aria-modal="true" aria-labelledby="conciergeTitle">
+    <button class="concierge-close" id="closeConcierge" type="button" aria-label="Close">&times;</button>
+
+    <p class="concierge-eyebrow">PRIVATE OFFICE UPDATE</p>
+    <h2 id="conciergeTitle">The full website UI/UX interface is being refined.</h2>
+    <p class="concierge-text">
+      While the full experience is under reconstruction by
+      <strong>Plae Creative Studio</strong>, you can still access my founder systems guide
+      or make a direct enquiry.
+    </p>
+
+    <div class="concierge-actions">
+      <a
+        class="concierge-primary"
+        href="https://www.notion.so/Free-Resource-5-Systems-I-Use-With-Startup-Founders-To-Keep-Their-Ops-Tidy-31a8896be7138091a70ef5c722131c3d?source=copy_link"
+        target="_blank"
+        rel="noopener"
+      >
+        Access Free Resource
+      </a>
+
+      <a
+        class="concierge-secondary"
+        href="mailto:thevafromisoko@gmail.com?subject=Executive%20Support%20Enquiry"
+      >
+        Make an Enquiry
+      </a>
+    </div>
+
+    <p class="concierge-note">Full website relaunching soon.</p>
+  </div>
+</div>
+
+<script>
+  const openConcierge = document.getElementById("openConcierge");
+  const conciergeModal = document.getElementById("conciergeModal");
+  const closeConcierge = document.getElementById("closeConcierge");
+
+  function showConcierge() {
+    conciergeModal.classList.add("show");
+    conciergeModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function hideConcierge() {
+    conciergeModal.classList.remove("show");
+    conciergeModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  openConcierge.addEventListener("click", showConcierge);
+  closeConcierge.addEventListener("click", hideConcierge);
+
+  conciergeModal.addEventListener("click", function (e) {
+    if (e.target === conciergeModal) hideConcierge();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && conciergeModal.classList.contains("show")) {
+      hideConcierge();
+    }
+  });
+</script>
 
 </body>
 </html>
